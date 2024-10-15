@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  receiver-app:
+    container_name: receiver-app-db
+    # using newly created image
+    build:
+      # specify dockerfile location
+      context: .
+    ports:
+      - "1522:1522"
+      - "5501:5501"
+    # mounting volume from our PC (../database-migration/src/main/resources/liquibase/receiver-app-db-config/scripts) to directory inside the container (/home/oracle/setup/custom_scripts),
+    # which we crated in Dockerfile
+    volumes:
+      - ./database-migration/src/main/resources/liquibase/receiver-app-db-config/scripts:/home/oracle/setup/custom_scripts
+    networks:
+      - data-transfer-network
+    restart: unless-stopped
+
+networks:
+  data-transfer-network:
+    driver: bridge
+
+
