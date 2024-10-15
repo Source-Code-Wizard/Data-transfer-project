@@ -6,7 +6,7 @@
         <groupId>source.code.wizzard</groupId>
         <artifactId>DataTransferProject</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>SenderApp</artifactId>
     <version>1.0.0-SNAPSHOT</version>
@@ -14,9 +14,13 @@
     <description>SenderApp</description>
 
     <properties>
+        <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
         <java.version>17</java.version>
         <version.oracle>19.8.0.0</version.oracle>
-        <LATEST_VERSION>1.59.0</LATEST_VERSION>
+        <LATEST_VERSION>1.62.2</LATEST_VERSION>
+        <io.grpc.version>1.68.0</io.grpc.version>
+        <protoc.version>3.25.1</protoc.version>
+        <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     </properties>
 
 
@@ -39,22 +43,6 @@
             <artifactId>spring-batch-infrastructure</artifactId>
         </dependency>
 
-        <!-- gRPC -->
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty-shaded</artifactId>
-            <version>${LATEST_VERSION}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>${LATEST_VERSION}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-            <version>${LATEST_VERSION}</version>
-        </dependency>
         <!-- gRPC Spring Boot starter -->
         <dependency>
             <groupId>net.devh</groupId>
@@ -62,22 +50,88 @@
             <version>2.15.0.RELEASE</version>
         </dependency>
 
+        <!-- Spring Boot gRPC Client -->
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-client-spring-boot-starter</artifactId>
+            <version>3.0.0.RELEASE</version>
+        </dependency>
+
+        <!-- gRPC -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>${io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${io.grpc.version}</version>
+        </dependency>
+
+        <!-- Protobuf -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>3.21.5</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
     </dependencies>
     <build>
+
+
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os-maven-plugin.version}</version>
+            </extension>
+        </extensions>
+
+
         <plugins>
             <!-- gRPC -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.6.1</version>
+                <version>${protobuf-maven-plugin.version}</version>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.24.0:exe:${os.detected.classifier}</protocArtifact>
+                    <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}
+                    </protocArtifact>
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${io.grpc.version}:exe:${os.detected.classifier}
+                    </pluginArtifact>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>protobuf-compile</id>
                         <goals>
                             <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>protobuf-compile-custom</id>
+                        <goals>
                             <goal>compile-custom</goal>
+                            <goal>test-compile-custom</goal>
                         </goals>
                     </execution>
                 </executions>

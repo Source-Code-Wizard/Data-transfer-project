@@ -1,19 +1,22 @@
 syntax = "proto3";
 
-package com.example;
+option java_multiple_files = true;
+option java_package = "source.code.wizard.grpc";
+option java_outer_classname = "DataTransferProto";
+import "google/protobuf/empty.proto"; // Import the empty message
 
-// The service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+package payment;
+
+service GRPCDataTransferService {
+  rpc SendData (DataRequest) returns (google.protobuf.Empty) {} // Added google.protobuf.Empty to avoid empty returns
 }
 
-// The request message.
-message HelloRequest {
-  string name = 1;
-}
-
-// The response message.
-message HelloReply {
-  string message = 1;
+// The request message containing the user's ID.
+message DataRequest {
+  int64 id = 1; // Changed to int64 and added field number
+  string fieldOne = 2;
+  string fieldTwo = 3;
+  string fieldThree = 4;
+  string fieldFour = 5;
+  string fieldFive = 6;
 }
