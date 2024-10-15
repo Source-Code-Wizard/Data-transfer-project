@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  sender-app:
+      container_name: sender-app-db
+      # using newly created image
+      build:
+        context: .
+      ports:
+        - "1521:1521"
+        - "5500:5500"
+      # mounting volume from our PC (./database-migration/src/main/resources/liquibase/tn-vehicle-manager-backend/scripts) to directory inside the container (/home/oracle/setup/custom_scripts),
+      # wich we crated in Dockerfile
+      volumes:
+        - ./database-migration/src/main/resources/liquibase/sender-app-db-config/scripts:/home/oracle/setup/custom_scripts
+      networks:
+        - data-transfer-network
+      restart: unless-stopped
+
+
+networks:
+  data-transfer-network:
+    driver: bridge
+
+

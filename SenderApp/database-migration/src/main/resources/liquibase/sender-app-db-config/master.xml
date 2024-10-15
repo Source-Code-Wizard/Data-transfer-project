@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.1-create-rest-audit-db.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.2-create-base-vehicle-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.3-minor-refactors-in-vehicle-and-vehicle-specs.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.4-add-constraints-and-indexes-to-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.5-fixes-in-datatypes.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.6-create-diptyque-and-ter-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.7-add-audit-to-ter.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.8-create-hibernate-sequence.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.9-create-settlement-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.10-refactor-ter-audit.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.11-add-audit-to-the-remaining-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.12-refactor-ter-table-and-drop-diptyque-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.13-create-depreciation-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.14-add-diptyque-number-to-validity-prologation.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.15-add-state-machine-table.xml"/>
+    <include relativeToChangelogFile="true"
+             file="changelogs/1.0.0.16-add-plate-serial-number-to-validity-prolongation.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.17-create-custom-sequence-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.18-create-cancellation-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.19-rename-ter-tables.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.20-vehicle-identification-request-refactor.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.21-create-mouvop-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.22-create-observations-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.23-refactor-ter-details-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.24-add-authorization-id-to-ter-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.25-add-role-columns-in-identification-request.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.26-make-cin-number-optional.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.27-increase-auth-id-size.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.28-update-mouvop-table.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.29-delete-fields-terdetails-mouvop.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.30-delete-fields-terdetails-mouvop-aud.xml"/>
+    <include relativeToChangelogFile="true" file="changelogs/1.0.0.31-add-owner-pm-id-column.xml"/>
+</databaseChangeLog>
