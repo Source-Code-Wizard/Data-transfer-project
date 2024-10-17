@@ -8,6 +8,8 @@ import source.code.wizard.receiverapp.Model.dto.DataRequestDto;
 import source.code.wizard.receiverapp.Model.entity.DataEntity;
 import source.code.wizard.receiverapp.repository.DataEntityRepository;
 
+import java.util.Random;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -16,8 +18,14 @@ public class DataEntityServiceImpl implements DataEntityService {
     private final DataEntityRepository dataEntityRepository;
     @Transactional
     @Override
-    public void save(DataRequestDto dataRequestDto) {
+    public void save(DataRequestDto dataRequestDto) throws Exception {
         log.info("Data with ID: "+dataRequestDto.id()+" received...");
+
+
+        Random rand = new Random();
+        if (rand.nextInt(100) < 3)
+            throw new Exception("Data: " + dataRequestDto.id() + " was not saved!");
+
         dataEntityRepository.save(toEntity(dataRequestDto));
         log.info("Data with ID: "+dataRequestDto.id()+" was saved!");
     }

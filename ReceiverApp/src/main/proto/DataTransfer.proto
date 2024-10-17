@@ -5,10 +5,10 @@ option java_package = "source.code.wizard.grpc";
 option java_outer_classname = "DataTransferProto";
 import "google/protobuf/empty.proto"; // Import the empty message
 
-package payment;
+package data;
 
 service GRPCDataTransferService {
-  rpc SendData (DataRequest) returns (google.protobuf.Empty) {} // Added google.protobuf.Empty to avoid empty returns
+  rpc SendData (stream DataRequest) returns (stream DataResponse) {} // Added google.protobuf.Empty to avoid empty returns
 }
 
 // The request message containing the user's ID.
@@ -19,4 +19,9 @@ message DataRequest {
   string fieldThree = 4;
   string fieldFour = 5;
   string fieldFive = 6;
+}
+
+message DataResponse {
+  int64 id = 1; // Changed to int64 and added field number
+  string message = 2;
 }
