@@ -25,7 +25,7 @@ public class RestDataTransferStrategy implements DataTransferStrategy {
     private static final String REST_BLOCKING = "REST_BLOCKING";
     private static final String REST_ASYNC = "REST_ASYNC";
     private static final Integer BATCH_SIZE = 100;
-    private final WebClient webClient = WebClient.create("http://localhost:8080");
+    private final WebClient webClient;
 
     @Override
     public void sendDataInBatches(final List<DataEntity> data) {
@@ -56,7 +56,7 @@ public class RestDataTransferStrategy implements DataTransferStrategy {
     private void asyncRestIntegration(List<DataEntity> data, int batchSize) {
         Flux.fromIterable(data)
                 .buffer(batchSize)
-                .flatMap(this::sendBatch, 1)
+                .flatMap(this::sendBatch, 10)
                 .subscribe(
                         success -> log.info("Batch sent successfully!"),
                         error -> log.error("Error sending batch: " + error.getMessage())

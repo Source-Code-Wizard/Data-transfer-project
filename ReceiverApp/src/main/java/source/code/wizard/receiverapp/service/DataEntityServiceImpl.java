@@ -22,9 +22,9 @@ public class DataEntityServiceImpl implements DataEntityService {
         log.info("Data with ID: "+dataRequestDto.id()+" received...");
 
 
-        Random rand = new Random();
-        if (rand.nextInt(100) < 3)
-            throw new Exception("Data: " + dataRequestDto.id() + " was not saved!");
+//        Random rand = new Random();
+//        if (rand.nextInt(100) < 3)
+//            throw new Exception("Data: " + dataRequestDto.id() + " was not saved!");
 
         dataEntityRepository.save(toEntity(dataRequestDto));
         log.info("Data with ID: "+dataRequestDto.id()+" was saved!");

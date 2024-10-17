@@ -19,7 +19,7 @@ public class DataController {
     private final DataEntityService dataEntityService;
 
     @PostMapping("/save")
-    public void save(@RequestBody final DataRequestDto dataRequestDto) {
+    public void save(@RequestBody final DataRequestDto dataRequestDto) throws Exception {
         dataEntityService.save(dataRequestDto);
     }
 }
