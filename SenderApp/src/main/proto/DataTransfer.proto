@@ -8,7 +8,7 @@ import "google/protobuf/empty.proto"; // Import the empty message
 package data;
 
 service GRPCDataTransferService {
-  rpc SendData (stream DataRequest) returns (stream DataResponse) {} // Added google.protobuf.Empty to avoid empty returns
+  rpc sendData (stream DataRequest) returns (stream DataResponse) {} // Added google.protobuf.Empty to avoid empty returns
 }
 
 // The request message containing the user's ID.

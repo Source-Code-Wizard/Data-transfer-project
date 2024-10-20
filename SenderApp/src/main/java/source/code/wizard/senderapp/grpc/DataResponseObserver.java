@@ -1,5 +1,6 @@
 package source.code.wizard.senderapp.grpc;
 
+import io.grpc.ManagedChannel;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import source.code.wizard.grpc.DataResponse;
@@ -12,6 +13,11 @@ public class DataResponseObserver implements StreamObserver<DataResponse> {
     private final CountDownLatch latch = new CountDownLatch(1);
     private final AtomicLong successCount = new AtomicLong(0);
     private final AtomicLong failureCount = new AtomicLong(0);
+    private final ManagedChannel communicationChannel;
+
+    public DataResponseObserver(ManagedChannel communicationChannel) {
+        this.communicationChannel = communicationChannel;
+    }
 
     @Override
     public void onNext(DataResponse dataResponse) {
@@ -24,7 +30,7 @@ public class DataResponseObserver implements StreamObserver<DataResponse> {
                 log.error("Entry failed - ID: {}, Message: {}", dataResponse.getId(), dataResponse.getMessage());
             } else {
                 successCount.incrementAndGet();
-               // log.info("Entry succeeded - ID: {}, Message: {}", dataResponse.getId(), dataResponse.getMessage());
+                // log.info("Entry succeeded - ID: {}, Message: {}", dataResponse.getId(), dataResponse.getMessage());
             }
         }
     }
@@ -38,23 +44,7 @@ public class DataResponseObserver implements StreamObserver<DataResponse> {
     @Override
     public void onCompleted() {
         log.info("Data transfer completed. Successful: {}, Failed: {}", successCount.get(), failureCount.get());
+        communicationChannel.shutdown();
         latch.countDown();
-    }
-
-    public void awaitCompletion() {
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            log.error("Interrupted while waiting for completion", e);
-        }
-    }
-
-    public long getSuccessCount() {
-        return successCount.get();
-    }
-
-    public long getFailureCount() {
-        return failureCount.get();
     }
 }

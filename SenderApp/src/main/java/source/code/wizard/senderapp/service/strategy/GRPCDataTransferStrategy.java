@@ -16,13 +16,14 @@ import java.util.List;
 @Component
 public class GRPCDataTransferStrategy implements DataTransferStrategy {
 
+
     @Override
     public void sendDataInBatches(List<DataEntity> data) {
-        final ManagedChannel receiverChannel = ManagedChannelBuilder.forAddress("localhost", 8090)
+        final ManagedChannel communicationChannel = ManagedChannelBuilder.forAddress("localhost", 8090)
                 .usePlaintext()
                 .build();
-        final GRPCDataTransferServiceGrpc.GRPCDataTransferServiceStub grpcDataTransferServiceStub = GRPCDataTransferServiceGrpc.newStub(receiverChannel);
-        final DataResponseObserver dataResponseObserver = new DataResponseObserver();
+        final GRPCDataTransferServiceGrpc.GRPCDataTransferServiceStub grpcDataTransferServiceStub = GRPCDataTransferServiceGrpc.newStub(communicationChannel);
+        final DataResponseObserver dataResponseObserver = new DataResponseObserver(communicationChannel);
 
         StreamObserver<DataRequest> dataRequestStreamObserver = grpcDataTransferServiceStub.sendData(dataResponseObserver);
 
@@ -32,17 +33,6 @@ public class GRPCDataTransferStrategy implements DataTransferStrategy {
         });
 
         dataRequestStreamObserver.onCompleted();
-
-//        dataResponseObserver.awaitCompletion();
-//        try {
-//            receiverChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-//        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt();
-//            log.error("Interrupted while shutting down the channel", e);
-//        }
-
-        log.info("Data transfer completed. Successful entries: {}, Failed entries: {}",
-                dataResponseObserver.getSuccessCount(), dataResponseObserver.getFailureCount());
     }
 
     private DataRequest toDataRequest(final DataEntity dataEntity) {

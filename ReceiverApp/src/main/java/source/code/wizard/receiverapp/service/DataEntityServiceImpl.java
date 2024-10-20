@@ -16,21 +16,22 @@ import java.util.Random;
 public class DataEntityServiceImpl implements DataEntityService {
 
     private final DataEntityRepository dataEntityRepository;
+
     @Transactional
     @Override
     public void save(DataRequestDto dataRequestDto) throws Exception {
-        log.info("Data with ID: "+dataRequestDto.id()+" received...");
+        log.info("Data with ID: " + dataRequestDto.id() + " received...");
 
-
-//        Random rand = new Random();
-//        if (rand.nextInt(100) < 3)
-//            throw new Exception("Data: " + dataRequestDto.id() + " was not saved!");
+        // Let's throw an exception in order for the sender to implement a simple error mechanism.
+        Random rand = new Random();
+        if (rand.nextInt(100) == 1)
+            throw new Exception("Data: " + dataRequestDto.id() + " was not saved!");
 
         dataEntityRepository.save(toEntity(dataRequestDto));
-        log.info("Data with ID: "+dataRequestDto.id()+" was saved!");
+        log.info("Data with ID: " + dataRequestDto.id() + " was saved!");
     }
 
-    private DataEntity toEntity(final DataRequestDto dataRequestDto){
+    private DataEntity toEntity(final DataRequestDto dataRequestDto) {
         return DataEntity.builder()
                 .id(dataRequestDto.id())
                 .fieldFour(dataRequestDto.fieldFour())

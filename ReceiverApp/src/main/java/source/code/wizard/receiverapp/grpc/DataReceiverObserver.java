@@ -109,7 +109,7 @@ public class DataReceiverObserver implements StreamObserver<DataRequest> {
 
             // Simulating a scenario when something goes wrong
             Random rand = new Random();
-            if (rand.nextInt(100) < 3) {
+            if (rand.nextInt(100) == 1) {
                 throw new Exception("Data: " + dataEntity.getId() + " was not saved!");
             }
 
